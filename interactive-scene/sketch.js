@@ -3,7 +3,15 @@ let h = 300
 let w = 600
 // //////////
 
+let bitFont
 
+function preload() {
+  bitFont = ('assets/fonts/bitFont.ttf')
+}
+
+
+
+let starting = true
 let pause = false
 
 
@@ -119,9 +127,10 @@ function ballMove() {
 // ////////////// collision detection ////////////////
 function p1CollisionDetect() {
   if (((ballX + radius) >= paddle1X)&&((ballY+radius) >= topCollider1&&(ballY-radius) <= bottomCollider1)) {
-    if (ballX > paddleDist+paddleWidth) {
-      ballX = ballX - 30;
+    if (ballX > paddle1X-5) {
+      ballX = ballX - 40;
     }
+    dx += 0.5
     dx = dx * -1;
   }
 }
@@ -130,6 +139,7 @@ function p2CollisionDetect() {
     if (ballX < paddleDist+paddleWidth) {
       ballX = ballX + 30;
     }
+    dx += 0.5
     dx = dx * -1;
   }
 }
@@ -142,7 +152,7 @@ function drawElements() {
   rect(paddle1X, paddle1Y, paddleWidth, paddleHeight)
   rect(paddle2X, paddle2Y, paddleWidth, paddleHeight)
   textSize(30);
-  // fill(255,0,0)
+  textFont(bitFont);
   text(p1Score, w-35, 50)
   text(p2Score, 20, 50)
   fill(255)
@@ -150,16 +160,24 @@ function drawElements() {
 // ////// ///////////// //////
 
 
-// //// restart //// //
-function restart() {
+// //// pauseText //// //
+function pauseText() {
   resetBallPos()
-  text('press space to restart', w/4+15, h-h/3)
+  if (starting) {
+    text('press space to begin', w/4+15, h-h/3)
+  }
+  else {
+    text('press space to restart', w/4+15, h-h/3)
+  }
   if (keyIsDown(32) === true) {
     dx = masterSpeed
     dy = dx/1.5
     pause = false
+    starting = false
   }
 }
+
+
 
 
 // ////// score ////// //
@@ -178,15 +196,21 @@ function score() {
 
 function setup() {
   createCanvas(w, h);
+  frameRate(360)
 }
 
 function draw() {
   background(0);
   fill(255)
-  
+  textSize(30)
+  textFont(bitFont);
+
   
   if (pause) {
-    restart()
+    pauseText()
+  }
+  if (starting) {
+    pauseText()
   }
   
   
