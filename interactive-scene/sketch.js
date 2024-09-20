@@ -4,8 +4,10 @@ let w = 600
 // //////////
 
 let bitFont
+let harharhar
 
 function preload() {
+  harharhar = loadImage('assets/images/harharharharharharharhar.png')
   bitFont = ('assets/fonts/bitFont.ttf')
 }
 
@@ -183,15 +185,26 @@ function pauseText() {
 // ////// score ////// //
 function score() {
   if (ballX<=0+radius) {
+    ignoreThisPlease()
     p1Score += 1
     pause = true
   }
   if (ballX>=width-radius) {
+    ignoreThisPlease()
     p2Score += 1
     pause = true
   }
 }
 // ////// ///// ////// //
+
+let chance
+
+function ignoreThisPlease() {
+  chance = random(0,1)
+  if (chance === 1) {
+    image(harharhar,0,0,100)
+  }
+}
 
 
 function setup() {
