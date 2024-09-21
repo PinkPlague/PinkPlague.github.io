@@ -209,7 +209,7 @@ function ignoreThisPlease() {
 
 function setup() {
   createCanvas(w, h);
-  frameRate(360)
+  //frameRate(360)
 }
 
 function draw() {
