@@ -45,9 +45,8 @@ let paddleHeight = 100
 let paddleWidth = 20
 let paddle1Y = (h/2)-(paddleHeight/2)
 let paddle1X = (w-paddleDist)
-let paddleSpeed = 4
+let paddleSpeed = 2
 // /////////////////////////////////
-
 
 // ///////////// paddle 1 colliders //////////////
 // top collider //
