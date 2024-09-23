@@ -29,6 +29,15 @@ let p2Score = 0
 // // /////////////// // //
 
 
+function win() {
+  if (p1Score>=5||p2Score>=5) {
+    starting = true;
+    p1Score = 0;
+    p2Score = 0;
+  }
+}
+
+
 // // ball variables & functions // //
 let radius = 15
 let masterSpeed = 4
@@ -115,9 +124,15 @@ function p2Down() {
 
 
 // //////////////// ball movement ////////////////
+let direction
 function ballMove() {
   // move ballX
-  ballX = ballX+dx;
+  if (direction < 50) {
+    ballX += dx;
+  }
+  else {
+    ballX -= dx;
+  }
   if ((ballX>=width-radius)||(ballX<=0+radius)) {
     dx = dx*0;
     dy = 0;
@@ -185,6 +200,7 @@ function pauseText() {
     pause = false
     starting = false
     rare = false
+    direction = random(100)
   }
 }
 
@@ -210,7 +226,7 @@ function score() {
 let chance
 
 function ignoreThisPlease() {
-  chance = round(random(0,10))
+  chance = round(random(0,1))
   if (chance === 1) {
     rare = true
   }
@@ -227,6 +243,7 @@ function draw() {
   fill(255)
   textSize(30)
   textFont(bitFont);
+  win()
 
   
   if (pause) {
