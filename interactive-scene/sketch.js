@@ -1,10 +1,16 @@
+
+let windowSize = 600
+
+
+
 // / screen /
-let h = 300
-let w = 600
+let h = windowSize/2
+let w = windowSize
 // //////////
 
 let bitFont
 let harharhar
+let rare = false
 
 function preload() {
   harharhar = loadImage('assets/images/harharharharharharharhar.png')
@@ -167,6 +173,9 @@ function pauseText() {
   if (starting) {
     text('press space to begin', w/4+15, h-h/3)
   }
+  else if (rare) {
+    image(harharhar,0,0,w,h)
+  }
   else {
     text('press space to restart', w/4+15, h-h/3)
   }
@@ -175,6 +184,7 @@ function pauseText() {
     dy = dx/1.5
     pause = false
     starting = false
+    rare = false
   }
 }
 
@@ -187,6 +197,7 @@ function score() {
     ignoreThisPlease()
     p1Score += 1
     pause = true
+
   }
   if (ballX>=width-radius) {
     ignoreThisPlease()
@@ -199,9 +210,9 @@ function score() {
 let chance
 
 function ignoreThisPlease() {
-  chance = random(0,1)
+  chance = round(random(0,10))
   if (chance === 1) {
-    image(harharhar,0,0,100)
+    rare = true
   }
 }
 
@@ -227,8 +238,10 @@ function draw() {
   
   
   // // draw elements // //
-  drawElements()
-  // // ///////////// // //
+  if (!rare) {
+    drawElements()
+  }
+    // // ///////////// // //
   
   
   // // movements // //
