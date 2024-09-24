@@ -2,6 +2,10 @@
 let windowSize = 600
 
 
+let currentTime;
+let lastSavedTime;
+
+
 
 // / screen /
 let h = windowSize/2
@@ -18,9 +22,10 @@ function preload() {
 }
 
 
-
+// // pause/start states // //
 let starting = true
 let pause = false
+// // ////////////////// // //
 
 
 // // score variables // //
@@ -124,7 +129,7 @@ function p2Down() {
 
 
 // //////////////// ball movement ////////////////
-let direction
+let direction;
 function ballMove() {
   // move ballX
   if (direction < 50) {
