@@ -7,4 +7,7 @@
 - Cat.
 
 ## Projects
-- [Interactive Scene (Pong Recration)](interactive-scene)
+- [Interactive Scene (Pong Recreation)](interactive-scene)
+
+## Personal Projects (W.I.P Games)
+- [Dasher (W.I.P)](dasher)

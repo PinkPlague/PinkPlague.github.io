@@ -5,9 +5,7 @@ let greenLength = 3000;
 let lastSavedTime = 0;
 // // /////////// // //
 // // states // //
-let redState = true;
-let yellowState = false;
-let greenState = false;
+let lightState = "red";
 // // ////// // //
 
 
@@ -19,38 +17,38 @@ function setup() {
 function draw() {
   background(220);
   drawOutlineOfLights();
+  trafficLight();
+}
 
-  if (redState) {
+function trafficLight() {
+  if (lightState === "red") {
     redLight();
   }
-  if (yellowState) {
+  if (lightState === "yellow") {
     yellowLight();
   }
-  if (greenState) {
+  if (lightState === "green") {
     greenLight();
   }
 }
 
 function redLight() {
-  if ((millis() > lastSavedTime + redLength && millis() < redLength + yellowLength + lastSavedTime)) {
-    redState = !redState;
-    greenState = !greenState;
+  if (millis() > lastSavedTime + redLength && millis() < redLength + yellowLength + lastSavedTime) {
+    lightState = "yellow";
     lastSavedTime = millis();
   }
 }
 
 function yellowLight() {
-  if ((millis() > lastSavedTime + yellowLength && millis() < yellowLength + greenLength + lastSavedTime)) {
-    yellowState = !yellowState;
-    redState = !redState;
+  if (millis() > lastSavedTime + yellowLength && millis() < yellowLength + greenLength + lastSavedTime) {
+    lightState = "green";
     lastSavedTime = millis();
   }
 }
 
 function greenLight() {
-  if ((millis() > lastSavedTime + greenLength && millis() < greenLength + redLength + lastSavedTime)) {
-    greenState = !greenState;
-    yellowState = !yellowState;
+  if (millis() > lastSavedTime + greenLength && millis() < greenLength + redLength + lastSavedTime) {
+    lightState = "red";
     lastSavedTime = millis();
   }
 }
@@ -63,21 +61,24 @@ function drawOutlineOfLights() {
 
   //lights
   fill(25);
-  if (redState) {
-    fill(225,0,0)
-  } else {
+  if (lightState === "red") {
+    fill(225,0,0);
+  }
+  else {
     fill(25);
   }
   ellipse(width/2, height/2 - 65, 50, 50); //top
-  if (yellowState) {
-    fill(255,255,0)
-  } else {
+  if (lightState === "yellow") {
+    fill(255,255,0);
+  }
+  else {
     fill(25);
   }
   ellipse(width/2, height/2, 50, 50); //middle
-  if (greenState) {
-    fill(0,225,0)
-  } else {
+  if (lightState === "green") {
+    fill(0,225,0);
+  }
+  else {
     fill(25);
   }
   ellipse(width/2, height/2 + 65, 50, 50); //bottom
