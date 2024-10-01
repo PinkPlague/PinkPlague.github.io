@@ -2,6 +2,9 @@ let windowDesired;
 let winWidth;
 let winHeight;
 
+let currentTime;
+let lastSavedTime;
+
 let playerSize;
 let playerX;
 let playerY;
@@ -9,9 +12,14 @@ let playerSpeed;
 let playerWeight;
 let jump = 0;
 
-let onGround;
+let playerSpawnX = 50;
+let playerSpawnY = 550;
 
-let detect;
+let onGround;
+let groundLevel;
+
+let detect1;
+let detect2;
 
 function setup() {
   windowDesired = 600;
@@ -21,25 +29,28 @@ function setup() {
 
   
   playerSize = 50;
-  playerY = 300;
-  playerX = 50;
+  playerY = playerSpawnY;
+  playerX = playerSpawnX;
   playerSpeed = 10;
   playerWeight = 1;
   jump = 0;
 
   onGround = false;
+  groundLevel = winHeight - 90;
 
-  detect = 255;
+  detect1 = 255;
 }
 
 function draw() {
   background(220);
+  noStroke();
 
+  fill(125);
+  rect(0,groundLevel, winWidth, winHeight);
   
   playerY -= jump;
 
   up();
-  // down();
   left();
   right();
 
@@ -48,48 +59,59 @@ function draw() {
   fill(0);
   square(playerX, playerY, playerSize);
 
+  drawKillObject(150, groundLevel+20, 50);
+}
 
-  fill(detect);
-  square(150, 500, 100)
-
-
-
-  if(playerX+playerSize >= 150 && playerX <= (150 + 100) && playerY+playerSize >= 500 && playerY <= (600 + 100)) {
-    detect = 0;
+function drawKillObject(objectX, objectY, objectSize) {
+  fill(detect1,detect2,0);
+  triangle(objectX,objectY,objectX+objectSize/2,objectY-objectSize,objectX+objectSize,objectY);
+  // square(objectX, objectY-objectSize, objectSize);
+  if(playerX+playerSize >= objectX && playerX <= objectX + objectSize && playerY+playerSize >= objectY-objectSize && playerY <= objectY+objectSize) {
+    playerY = playerSpawnY;
+    playerX = playerSpawnX;
+    detect1 = 255;
+    detect2 = 0;
   }
   else {
-    detect = 255;
+    detect1 = 0;
+    detect2 = 255;
   }
 }
-
 
 function gravity() {
-  if (playerY+playerSize>=winHeight-100) {
+  ground();
+  if (playerY+playerSize>=groundLevel) {
     onGround = true;
-    playerY = winHeight - playerSize-100;
     jump = 1;
-  } else {
-    onGround = false;
-  }
-  if (!onGround) {
-    // playerY += playerWeight;
-    jump -= playerWeight
+    ground();
   }
 }
+  
+function ground() {
+  if (onGround) {
+    playerY = groundLevel-playerSize;
+  }
+  else {
+    onGround = false;
+    jump -= playerWeight;
+  }
+}
+
 function up() {
   if (keyIsDown(UP_ARROW) === true) {
     if (onGround) {
-      jump += 15
+      onGround = !onGround;
+      jump += 15;
     }
   }
 }
 function right() {
   if (keyIsDown(RIGHT_ARROW) === true) {
-    playerX += 2;
+    playerX += playerSpeed;
   }
 }
 function left() {
   if (keyIsDown(LEFT_ARROW) === true) {
-    playerX -= 2;
+    playerX -= playerSpeed;
   }
 }
