@@ -12,6 +12,15 @@ let playerSpeed;
 let playerWeight;
 let jump = 0;
 
+let playerTopLeftCornerX;
+let playerTopLeftCornerY;
+let playerBottomLeftCornerX;
+let playerBottomLeftCornerY;
+let playerTopRightCornerX;
+let playerTopRightCornerY;
+let playerBottomRightCornerX;
+let playerBottomRightCornerY;
+
 let playerSpawnX = 50;
 let playerSpawnY = 550;
 
@@ -45,6 +54,9 @@ function draw() {
   background(220);
   noStroke();
 
+
+  
+
   fill(125);
   rect(0,groundLevel, winWidth, winHeight);
   
@@ -60,12 +72,19 @@ function draw() {
   square(playerX, playerY, playerSize);
 
   drawKillObject(150, groundLevel+20, 50);
+  cornerPos();
+  fill(0,0,255);
+  circle(playerTopLeftCornerX,playerTopLeftCornerY,10);
+  circle(playerBottomLeftCornerX,playerBottomLeftCornerY,10);
+  circle(playerTopRightCornerX,playerTopRightCornerY,10);
+  circle(playerBottomRightCornerX,playerBottomRightCornerY,10);
 }
 
 function drawKillObject(objectX, objectY, objectSize) {
   fill(detect1,detect2,0);
   triangle(objectX,objectY,objectX+objectSize/2,objectY-objectSize,objectX+objectSize,objectY);
-  // square(objectX, objectY-objectSize, objectSize);
+  fill(255,0,0);
+  square(objectX+objectSize/5*2, objectY-objectSize/2, objectSize/5);
   if(playerX+playerSize >= objectX && playerX <= objectX + objectSize && playerY+playerSize >= objectY-objectSize && playerY <= objectY+objectSize) {
     playerY = playerSpawnY;
     playerX = playerSpawnX;
@@ -114,4 +133,14 @@ function left() {
   if (keyIsDown(LEFT_ARROW) === true) {
     playerX -= playerSpeed;
   }
+}
+function cornerPos() {
+  playerTopLeftCornerX = playerX;
+  playerTopLeftCornerY = playerY;
+  playerBottomLeftCornerX = playerX;
+  playerBottomLeftCornerY = playerY+playerSize;
+  playerTopRightCornerX = playerX+playerSize;
+  playerTopRightCornerY = playerY;
+  playerBottomRightCornerX = playerX+playerSize;
+  playerBottomRightCornerY = playerY+playerSize;
 }
