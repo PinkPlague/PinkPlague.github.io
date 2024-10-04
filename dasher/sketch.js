@@ -5,20 +5,11 @@ let winHeight;
 let currentTime;
 let lastSavedTime;
 
-let playerTopLeftCornerX;
-let playerTopLeftCornerY;
-let playerBottomLeftCornerX;
-let playerBottomLeftCornerY;
-let playerTopRightCornerX;
-let playerTopRightCornerY;
-let playerBottomRightCornerX;
-let playerBottomRightCornerY;
-
 let thePlayer = {
   playerSize: 50,
   playerX: 0,
   playerY: 0,
-  playerSpeed: 10,
+  playerSpeed: 7,
   playerWeight: 1,
   jump: 0,
   playerSpawnX: 50,
@@ -48,7 +39,7 @@ function setup() {
 
 function draw() {
   background(220);
-  noStroke();
+  
 
 
   
@@ -64,24 +55,40 @@ function draw() {
 
   gravity();
 
-  fill(0);
-  square(thePlayer.playerX, thePlayer.playerY, thePlayer.playerSize);
+  drawKillObject(150, groundLevel-50, 50);
 
-  drawKillObject(150, groundLevel+20, 50);
-  cornerPos();
-  fill(0,0,255);
-  circle(playerTopLeftCornerX,playerTopLeftCornerY,10);
-  circle(playerBottomLeftCornerX,playerBottomLeftCornerY,10);
-  circle(playerTopRightCornerX,playerTopRightCornerY,10);
-  circle(playerBottomRightCornerX,playerBottomRightCornerY,10);
+  fill(0);
+  stroke(255,0,255);
+  strokeWeight(4);
+  square(thePlayer.playerX, thePlayer.playerY, thePlayer.playerSize);
+  noStroke();
+
+  
 }
 
 function drawKillObject(objectX, objectY, objectSize) {
-  fill(detect1,detect2,0);
-  triangle(objectX,objectY,objectX+objectSize/2,objectY-objectSize,objectX+objectSize,objectY);
+  let killBox = {
+    x: objectX+objectSize/5*2,
+    y: objectY-objectSize/2-objectSize/8,
+    w: objectSize/5,
+    h: objectSize/2.5,
+  };
+  let spike = {
+    x1: objectX,
+    y1: objectY,
+    x2: objectX+objectSize/2,
+    y2: objectY-objectSize,
+    x3: objectX+objectSize,
+    y3: objectY,
+  };
+  stroke("white");
+  strokeWeight(3);
+  fill(0);
+  triangle(spike.x1,spike.y1,spike.x2,spike.y2,spike.x3,spike.y3);
+  noStroke();
   fill(255,0,0);
-  rect(objectX+objectSize/5*2, objectY-objectSize/2-objectSize/8, objectSize/5,objectSize/2.5,);
-  if(thePlayer.playerX+thePlayer.playerSize >= objectX && thePlayer.playerX <= objectX + objectSize && thePlayer.playerY+thePlayer.playerSize >= objectY-objectSize && thePlayer.playerY <= objectY+objectSize) {
+  rect(killBox.x, killBox.y, killBox.w, killBox.h);
+  if(thePlayer.playerX+thePlayer.playerSize >= killBox.x && thePlayer.playerX <= killBox.x + killBox.w && thePlayer.playerY+thePlayer.playerSize >= killBox.y+killBox.h && thePlayer.playerY <= killBox.y) {
     thePlayer.playerY = thePlayer.playerSpawnY;
     thePlayer.playerX = thePlayer.playerSpawnX;
     detect1 = 255;
@@ -129,14 +136,4 @@ function left() {
   if (keyIsDown(LEFT_ARROW) === true) {
     thePlayer.playerX -= thePlayer.playerSpeed;
   }
-}
-function cornerPos() {
-  playerTopLeftCornerX = thePlayer.playerX;
-  playerTopLeftCornerY = thePlayer.playerY;
-  playerBottomLeftCornerX = thePlayer.playerX;
-  playerBottomLeftCornerY = thePlayer.playerY+thePlayer.playerSize;
-  playerTopRightCornerX = thePlayer.playerX+thePlayer.playerSize;
-  playerTopRightCornerY = thePlayer.playerY;
-  playerBottomRightCornerX = thePlayer.playerX+thePlayer.playerSize;
-  playerBottomRightCornerY = thePlayer.playerY+thePlayer.playerSize;
 }

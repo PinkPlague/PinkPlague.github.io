@@ -8,6 +8,7 @@
 - [Image Demo](image-demo)
 - [Traffic Light](traffic-light)
 - [Bouncing Ball](bouncing-ball)
+- [generative art demo](art)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
