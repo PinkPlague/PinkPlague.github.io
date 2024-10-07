@@ -9,6 +9,7 @@
 - [Traffic Light](traffic-light)
 - [Bouncing Ball](bouncing-ball)
 - [generative art demo](art)
+- [Perlin Noise Ball](perlin-noise)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
