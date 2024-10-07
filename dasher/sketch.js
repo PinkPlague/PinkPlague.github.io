@@ -9,7 +9,7 @@ let thePlayer = {
   playerSize: 50,
   playerX: 0,
   playerY: 0,
-  playerSpeed: 7,
+  playerSpeed: 6.5,
   playerWeight: 1,
   jump: 0,
   playerSpawnX: 50,
@@ -39,7 +39,7 @@ function setup() {
 
 function draw() {
   background(220);
-  
+  currentTime = millis();
 
 
   
@@ -55,7 +55,9 @@ function draw() {
 
   gravity();
 
-  drawKillObject(150, groundLevel-50, 50);
+  drawKillObject(150, groundLevel, 50);
+  drawKillObject(200, groundLevel, 50);
+  drawKillObject(250, groundLevel, 50);
 
   fill(0);
   stroke(255,0,255);

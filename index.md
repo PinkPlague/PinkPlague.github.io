@@ -10,6 +10,7 @@
 - [Bouncing Ball](bouncing-ball)
 - [generative art demo](art)
 - [Perlin Noise Ball](perlin-noise)
+- [terrain generation demo](perlin-noise-array)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
