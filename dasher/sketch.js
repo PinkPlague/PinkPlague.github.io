@@ -1,3 +1,6 @@
+// IMPORTANT LINK!!!! https://www.jeffreythompson.org/collision-detection/rect-rect.php
+
+
 let windowDesired;
 let winWidth;
 let winHeight;
@@ -58,13 +61,25 @@ function draw() {
   drawKillObject(150, groundLevel, 50);
   drawKillObject(200, groundLevel, 50);
   drawKillObject(250, groundLevel, 50);
+  drawBlock(250, groundLevel, 50);
 
   fill(0);
   stroke(255,0,255);
   strokeWeight(4);
   square(thePlayer.playerX, thePlayer.playerY, thePlayer.playerSize);
   noStroke();
+  
+  
+}
 
+function drawBlock(objectX,objectY,objectSize) {
+  let block = {
+    x: objectX+objectSize,
+    y: objectY-objectSize,
+    w: objectSize,
+    h: objectSize,
+  };
+  rect(block.x,block.y,block.w,block.h);
   
 }
 
@@ -124,7 +139,7 @@ function ground() {
 function up() {
   if (keyIsDown(UP_ARROW) === true) {
     if (onGround) {
-      onGround = !onGround;
+      onGround = false;
       thePlayer.jump += 15;
     }
   }

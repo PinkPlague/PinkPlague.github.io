@@ -11,6 +11,7 @@
 - [generative art demo](art)
 - [Perlin Noise Ball](perlin-noise)
 - [terrain generation demo](perlin-noise-array)
+- [bubble demo](bubble)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)

@@ -29,6 +29,8 @@ function setup() {
 
   onGround = false;
   groundLevel = height - 90;
+
+  window.setInterval(makeBullet, 500);
 }
 
 function draw() {
@@ -56,12 +58,12 @@ function draw() {
 
   fill(255);
   stroke(0);
-  if (millis() < GAME_LENGTH) {
-    if (millis() > lastSavedTime && millis() < lastSavedTime + bulletDelay) {
-      makeBullet();
-      lastSavedTime = millis() + bulletDelay;
-    }
-  }
+  // if (millis() < GAME_LENGTH) {
+  //   if (millis() > lastSavedTime && millis() < lastSavedTime + bulletDelay) {
+  //     makeBullet();
+  //     lastSavedTime = millis() + bulletDelay;
+  //   }
+  // }
 
   for (let theBullet of bulletArray) {
     theBullet.x += theBullet.dx;
@@ -71,13 +73,13 @@ function draw() {
     if (theBullet.x+BULLET_SIZE>=width||theBullet.x-BULLET_SIZE<=0) {
       theBullet.dx *=-1;
     }
-    if (theBullet.y+BULLET_SIZE>=height||theBullet.y-BULLET_SIZE<=0) {
+    if (theBullet.y+BULLET_SIZE>=groundLevel||theBullet.y-BULLET_SIZE<=0) {
       theBullet.dy *=-1;
     }
 
-    // if (thePlayer.playerY + thePlayer.playerSize > theBullet.y && thePlayer.y)
+    
 
-    // if (thePlayer.playerX+thePlayer.playerSize >= killBox.x && thePlayer.playerX <= killBox.x + killBox.w && thePlayer.playerY+thePlayer.playerSize >= killBox.y+killBox.h && thePlayer.playerY <= killBox.y) 
+    
 
 
     circle(theBullet.x,theBullet.y,BULLET_SIZE*2);
