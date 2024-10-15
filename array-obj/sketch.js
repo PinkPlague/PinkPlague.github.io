@@ -1,7 +1,6 @@
 // array and object notation assignment
 
 const GAME_LENGTH = 5000;
-const BULLET_SIZE = 10;
 let bulletDelay = 750;
 let bulletArray = [];
 
@@ -9,13 +8,16 @@ let lastSavedTime = 0;
 
 
 let thePlayer = {
-  playerSize: 25,
+  playerSize: 50,
   playerX: 0,
   playerY: 0,
   playerSpeed: 6.5,
   playerWeight: 0.5,
   jump: 0,
 };
+
+
+let score = false;
 
 let onGround;
 let groundLevel;
@@ -58,31 +60,23 @@ function draw() {
 
   fill(255);
   stroke(0);
-  // if (millis() < GAME_LENGTH) {
-  //   if (millis() > lastSavedTime && millis() < lastSavedTime + bulletDelay) {
-  //     makeBullet();
-  //     lastSavedTime = millis() + bulletDelay;
-  //   }
-  // }
 
   for (let theBullet of bulletArray) {
     theBullet.x += theBullet.dx;
     theBullet.y += theBullet.dy;
 
     //bounce if needed
-    if (theBullet.x+BULLET_SIZE>=width||theBullet.x-BULLET_SIZE<=0) {
+    if (theBullet.x+theBullet.r>=width||theBullet.x-theBullet.r<=0) {
       theBullet.dx *=-1;
     }
-    if (theBullet.y+BULLET_SIZE>=groundLevel||theBullet.y-BULLET_SIZE<=0) {
+    if (theBullet.y+theBullet.r>=groundLevel||theBullet.y-theBullet.r<=0) {
       theBullet.dy *=-1;
     }
+    if (bulletCollision(theBullet) === true) {
+      background("yellow");
+    }
 
-    
-
-    
-
-
-    circle(theBullet.x,theBullet.y,BULLET_SIZE*2);
+    circle(theBullet.x,theBullet.y,theBullet.r*2);
   }
 }
 
@@ -94,6 +88,7 @@ function makeBullet() {
   bullet = {
     x: random(100,width-100),
     y: 50,
+    r: 10,
     dx: random(-6,7),
     dy: random(3,6),
   };
@@ -136,4 +131,28 @@ function left() {
   if (keyIsDown(LEFT_ARROW) === true) {
     thePlayer.playerX -= thePlayer.playerSpeed;
   }
+}
+
+function bulletCollision(someBullet) {
+  let collide = false;
+  if (
+    someBullet.x + someBullet.r > thePlayer.x && // right edge of circle > left edge of rectangle
+    someBullet.x - someBullet.r < thePlayer.x + thePlayer.playerSize && // left edge of circle < right edge of rectangle
+    someBullet.y + someBullet.r > thePlayer.playerY && // bottom edge of circle > top edge of rectangle
+    someBullet.y - someBullet.r < thePlayer.playerY + thePlayer.playerSize
+  ) {
+    if (someBullet.y + someBullet.r > thePlayer.playerY && someBullet.y < thePlayer.playerY) {
+      // circle hit top edge of rectangle
+      score = true;
+    }
+    collide = true;
+  }
+  else {
+    // no collision
+    collide = false;
+    score = false;
+  }
+  
+  console.log(collide);
+  return collide;
 }
