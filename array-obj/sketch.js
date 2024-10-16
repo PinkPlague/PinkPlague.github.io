@@ -1,6 +1,7 @@
 // array and object notation assignment
 
 const GAME_LENGTH = 5000;
+const WEIGHT = 0.25;
 let bulletDelay = 750;
 let bulletArray = [];
 
@@ -12,15 +13,25 @@ let thePlayer = {
   playerX: 0,
   playerY: 0,
   playerSpeed: 6.5,
-  playerWeight: 0.5,
+  playerWeight: 0.25,
   jump: 0,
 };
 
+let slam = false;
 
-let score = false;
+let score = 0;
+
+let objectNum = 0;
 
 let onGround;
 let groundLevel;
+
+
+function scoreText() {
+  textSize(30);
+  text("Score: " + score, 20, 50);
+  text("bullets: " + objectNum, 20, 100);
+}
 
 
 function setup() {
@@ -32,18 +43,23 @@ function setup() {
   onGround = false;
   groundLevel = height - 90;
 
-  window.setInterval(makeBullet, 500);
+  for (let i = 0; i < 5; i++) {
+    makeBullet();
+  }
+
+  window.setInterval(makeBullet, 1000);
 }
 
 function draw() {
   background(220);
-
+  scoreText();
   fill(125);
   rect(0,groundLevel, width, height);
   
   thePlayer.playerY -= thePlayer.jump;
 
   up();
+  down();
   left();
   right();
 
@@ -55,8 +71,7 @@ function draw() {
   square(thePlayer.playerX, thePlayer.playerY, thePlayer.playerSize);
   noStroke();
 
-
-
+  groundSlam();
 
   fill(255);
   stroke(0);
@@ -72,9 +87,8 @@ function draw() {
     if (theBullet.y+theBullet.r>=groundLevel||theBullet.y-theBullet.r<=0) {
       theBullet.dy *=-1;
     }
-    if (bulletCollision(theBullet) === true) {
-      background("yellow");
-    }
+    
+    collided(theBullet);
 
     circle(theBullet.x,theBullet.y,theBullet.r*2);
   }
@@ -88,10 +102,11 @@ function makeBullet() {
   bullet = {
     x: random(100,width-100),
     y: 50,
-    r: 10,
+    r: 15,
     dx: random(-6,7),
     dy: random(3,6),
   };
+  objectNum += 1;
   bulletArray.push(bullet);
 }
 
@@ -107,10 +122,20 @@ function gravity() {
 function ground() {
   if (onGround) {
     thePlayer.playerY = groundLevel-thePlayer.playerSize;
+    slam = false;
   }
   else {
     onGround = false;
     thePlayer.jump -= thePlayer.playerWeight;
+  }
+}
+
+function groundSlam() {
+  if (slam) {
+    thePlayer.playerWeight += 0.25;
+  }
+  else {
+    thePlayer.playerWeight = WEIGHT;
   }
 }
 
@@ -119,6 +144,16 @@ function up() {
     if (onGround) {
       onGround = !onGround;
       thePlayer.jump += 20;
+    }
+  }
+}
+function down() {
+  if (keyIsDown(DOWN_ARROW) === true) {
+    if (!onGround) {
+      slam = true;
+    }
+    else {
+      slam = false;
     }
   }
 }
@@ -133,26 +168,19 @@ function left() {
   }
 }
 
-function bulletCollision(someBullet) {
-  let collide = false;
-  if (
-    someBullet.x + someBullet.r > thePlayer.x && // right edge of circle > left edge of rectangle
-    someBullet.x - someBullet.r < thePlayer.x + thePlayer.playerSize && // left edge of circle < right edge of rectangle
-    someBullet.y + someBullet.r > thePlayer.playerY && // bottom edge of circle > top edge of rectangle
-    someBullet.y - someBullet.r < thePlayer.playerY + thePlayer.playerSize
-  ) {
-    if (someBullet.y + someBullet.r > thePlayer.playerY && someBullet.y < thePlayer.playerY) {
-      // circle hit top edge of rectangle
-      score = true;
+function collided() {
+  for (let bullet of bulletArray) {
+    if (hasCollided(thePlayer.playerX + thePlayer.playerSize/2, thePlayer.playerY + thePlayer.playerSize/2, bullet)) {
+      let theIndex = bulletArray.indexOf(bullet);
+      bulletArray.splice(theIndex, 1);
+      score += 1;
+      objectNum -= 1;
+      console.log(score);
     }
-    collide = true;
   }
-  else {
-    // no collision
-    collide = false;
-    score = false;
-  }
-  
-  console.log(collide);
-  return collide;
+}
+
+function hasCollided(x,y,someBullet) {
+  let distanceAway = dist(x,y,someBullet.x,someBullet.y);
+  return distanceAway < someBullet.r + thePlayer.playerSize/2;
 }
