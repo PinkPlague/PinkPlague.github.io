@@ -2,22 +2,17 @@
 
 const GAME_LENGTH = 5000;
 const WEIGHT = 0.25;
-let bulletDelay = 750;
+const MAX_BULLETS = 30;
+let bulletDelay;
 let bulletArray = [];
 
 let lastSavedTime = 0;
 
 
-let thePlayer = {
-  playerSize: 50,
-  playerX: 0,
-  playerY: 0,
-  playerSpeed: 6.5,
-  playerWeight: 0.25,
-  jump: 0,
-};
+let thePlayer;
 
 let slam = false;
+let gameOverBoolean = false;
 
 let score = 0;
 
@@ -28,51 +23,60 @@ let groundLevel;
 
 
 function scoreText() {
-  textSize(30);
-  text("Score: " + score, 20, 50);
-  text("bullets: " + objectNum, 20, 100);
-}
-
-
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-
-  thePlayer.playerY = height - (90 + thePlayer.playerSize);
-  thePlayer.playerX = width/2-thePlayer.playerSize;
-
-  onGround = false;
-  groundLevel = height - 90;
-
-  for (let i = 0; i < 5; i++) {
-    makeBullet();
+  if (!gameOverBoolean) {
+    textSize(30);
+    text("Score: " + score, 20, 50);
+    text("Bullets: " + objectNum + "/" + MAX_BULLETS, 20, 100);
+    text("Delay: " + round(bulletDelay/1000,1) + "seconds", 20, 150);
   }
-
-  window.setInterval(makeBullet, 1000);
 }
 
-function draw() {
-  background(220);
+function gameOverMenu() {
+  textSize(40);
+  textAlign(CENTER);
+  fill("red");
+  text("💀 You Let Too Many Enemies Spawn! 💀", width/2, height/2-100);
+  text("X_X", width/2, height/2-50);
+  fill(255);
+  textSize(25);
+  text("Refresh to play again.",width/2,height/2);
+}
+
+function gameOver() {
+  if (gameOverBoolean) {
+    thePlayer.playerSpeed=0;
+    bulletArray = [];
+    objectNum = 0;
+    gameOverMenu();
+  }
+}
+
+function gameplay() {
   scoreText();
   fill(125);
   rect(0,groundLevel, width, height);
-  
-  thePlayer.playerY -= thePlayer.jump;
+  fill(0);
+  stroke(255,0,255);
+  strokeWeight(4);
+  if (!gameOverBoolean) {
+    square(thePlayer.playerX, thePlayer.playerY, thePlayer.playerSize);
+  }
+  if (objectNum >= MAX_BULLETS) {
+    gameOverBoolean = true;
+  }
+}
 
+function playerMovement() {
   up();
   down();
   left();
   right();
-
+  thePlayer.playerY -= thePlayer.jump;
   gravity();
-
-  fill(0);
-  stroke(255,0,255);
-  strokeWeight(4);
-  square(thePlayer.playerX, thePlayer.playerY, thePlayer.playerSize);
-  noStroke();
-
   groundSlam();
+}
 
+function projectileFunctions() {
   fill(255);
   stroke(0);
 
@@ -90,24 +94,65 @@ function draw() {
     
     collided(theBullet);
 
-    circle(theBullet.x,theBullet.y,theBullet.r*2);
+    if (!gameOverBoolean) {
+      circle(theBullet.x,theBullet.y,theBullet.r*2);
+    }
   }
+}
+
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+
+  bulletDelay = round(random(750, 1500));
+
+  thePlayer = {
+    playerSize: 50,
+    playerX: 0,
+    playerY: 0,
+    playerSpeed: 8,
+    playerWeight: 0.25,
+    jump: 0,
+  };
+
+  thePlayer.playerY = height - (90 + thePlayer.playerSize);
+  thePlayer.playerX = width/2-thePlayer.playerSize;
+
+  onGround = false;
+  groundLevel = height - 90;
+
+  window.setInterval(makeBullet, 1000);
+}
+
+function draw() {
+  background(220);
+  scoreText();
+  
+  gameOver();
+
+  playerMovement();
+
+  gameplay();
+
+  projectileFunctions();
 }
 
 
 
 function makeBullet() {
-  let bullet;
-
-  bullet = {
-    x: random(100,width-100),
-    y: 50,
-    r: 15,
-    dx: random(-6,7),
-    dy: random(3,6),
-  };
-  objectNum += 1;
-  bulletArray.push(bullet);
+  if (!gameOverBoolean) {
+    let bullet;
+  
+    bullet = {
+      x: random(100,width-100),
+      y: 50,
+      r: 15,
+      dx: random(-6,7),
+      dy: random(3,6),
+    };
+    objectNum += 1;
+    bulletArray.push(bullet);
+  }
 }
 
 function gravity() {
@@ -132,7 +177,9 @@ function ground() {
 
 function groundSlam() {
   if (slam) {
-    thePlayer.playerWeight += 0.25;
+    if (thePlayer.playerWeight <= 2) {
+      thePlayer.playerWeight += 0.25;
+    }
   }
   else {
     thePlayer.playerWeight = WEIGHT;

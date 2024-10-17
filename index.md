@@ -13,6 +13,8 @@
 - [terrain generation demo](perlin-noise-array)
 - [bubble demo](bubble)
 
+- [translation](translation demo)
+
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
 
