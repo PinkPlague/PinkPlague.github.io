@@ -132,6 +132,8 @@ function draw() {
 
   playerMovement();
 
+  gameBounds();
+
   gameplay();
 
   projectileFunctions();
@@ -230,4 +232,13 @@ function collided() {
 function hasCollided(x,y,someBullet) {
   let distanceAway = dist(x,y,someBullet.x,someBullet.y);
   return distanceAway < someBullet.r + thePlayer.playerSize/2;
+}
+
+function gameBounds() {
+  if (thePlayer.playerX + thePlayer.playerSize < 0) {
+    thePlayer.playerX = width + 5;
+  }
+  else if (thePlayer.playerX > width) {
+    thePlayer.playerX = -thePlayer.playerSize - 5;
+  }
 }
