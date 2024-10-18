@@ -5,6 +5,8 @@ let windowDesired;
 let winWidth;
 let winHeight;
 
+
+
 let currentTime;
 let lastSavedTime;
 
@@ -37,7 +39,6 @@ function setup() {
   onGround = false;
   groundLevel = winHeight - 90;
 
-  detect1 = 255;
 }
 
 function draw() {
