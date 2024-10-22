@@ -14,6 +14,7 @@
 - [bubble demo](bubble)
 
 - [translation](translation demo)
+- [grid demo](2D-array)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)

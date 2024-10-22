@@ -38,7 +38,7 @@ function setup() {
   // coins.collider = "k";
 
   //Overlaps method takes in a Sprite or group name (coins), then calls a function (collect)
-  // player.overlaps(coins, collect);
+  player.overlaps(platforms, reset);
 
   //Load starting screen
   loadStartScreen();
