@@ -15,6 +15,7 @@
 
 - [translation](translation demo)
 - [grid demo](2D-array)
+- [rectangular grid demo](2d-array-demo)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
