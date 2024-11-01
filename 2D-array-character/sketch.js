@@ -176,14 +176,20 @@ function generateEmptyGrid(cols, rows) {
 function updateGrid() {
   //make a new array to hold the next turn
 
+
+  let searchArea = [[-1, 0, 1],
+                    [-1, 0, 1],
+                    [-1, 0, 1]
+  ];
+
   //look at every cell
   for (let y = 0; y < GRID_SIZE; y++) {
     for (let x = 0; x < GRID_SIZE; x++) {
       //count it's neighbours
       let neighbours = 0;
 
-      for (let i = -1; i <= 1; i++) {
-        for (let j = -1; j <= 1; j++) {
+      for (let i of searchArea) {
+        for (let j of searchArea) {
           //don't fall of the edge
           if (y+i >= 0 && y+i < GRID_SIZE && x+j >= 0 && x+j < GRID_SIZE) {
             if (grid[y+i][x+j] === -1) {
@@ -192,6 +198,8 @@ function updateGrid() {
           }
         }
       }
+
+
 
       //don't count yourself
       neighbours -= grid[y][x];
