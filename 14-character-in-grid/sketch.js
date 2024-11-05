@@ -3,17 +3,15 @@
 // Oct 22, 2024
 
 let grid;
-const GRID_SIZE = 29;
+const GRID_SIZE = 10;
 let cellSize;
 let shouldToggleNeighbours = false;
 const OPEN_TILE = 0;
 const IMPASSIBLE_TILE = 1;
 const PLAYER_TILE = 9;
 let player = {
-  x: 14,
-  y: 14,
-  paddleX: 14,
-  paddleY: 16,
+  x: 0,
+  y: 0,
 };
 let grassImg;
 let pathImg;
@@ -35,7 +33,6 @@ function setup() {
 
   //add player to the grid
   grid[player.y][player.x] = PLAYER_TILE;
-
 }
 
 function windowResized() {
@@ -152,7 +149,7 @@ function generateRandomGrid(cols, rows) {
     for (let x = 0; x < cols; x++) {
       //choose either 0 or 1, each 50% of the time
       if (random(100) < 50) {
-        newGrid[y].push(OPEN_TILE);
+        newGrid[y].push(IMPASSIBLE_TILE);
       }
       else {
         newGrid[y].push(OPEN_TILE);
