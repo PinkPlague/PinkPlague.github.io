@@ -148,7 +148,7 @@ function generateRandomGrid(cols, rows) {
     newGrid.push([]);
     for (let x = 0; x < cols; x++) {
       //choose either 0 or 1, each 50% of the time
-      if (random(100) < 20) {
+      if (random(100) < 5) {
         newGrid[y].push(MINE_TILE);
       }
       else {
@@ -183,40 +183,47 @@ function updateGrid() {
       let neighbours = 0;
 
       for (let i = -1; i <= 1; i++) {
-        console.log(i);
         for (let j = -1; j <= 1; j++) {
-          console.log(j);
+          if (i === 0 && j === 0) {
+
+          }
           //don't fall of the edge
-          if (y+i >= 0 && y+i < GRID_SIZE && x+j >= 0 && x+j < GRID_SIZE) {
-            neighbours += grid[y+i][x+j];
+          else {
+            if (y+i >= 0 && y+i < GRID_SIZE && x+j >= 0 && x+j < GRID_SIZE) {
+              if (grid[y + i][x + j] === MINE_TILE) {
+                neighbours++;
+              }
+            }
+
           }
         }
       }
 
-
-      if (neighbours === -NUMBER_TILES.one) {
-        grid[y][x] = NUMBER_TILES.one;
-      }
-      else if (neighbours === -NUMBER_TILES.two) {
-        grid[y][x] = NUMBER_TILES.two;
-      }
-      else if (neighbours === -NUMBER_TILES.three) {
-        grid[y][x] = NUMBER_TILES.three;
-      }
-      else if (neighbours === -NUMBER_TILES.four) {
-        grid[y][x] = NUMBER_TILES.four;
-      }
-      else if (neighbours === -NUMBER_TILES.five) {
-        grid[y][x] = NUMBER_TILES.five;
-      }
-      else if (neighbours === -NUMBER_TILES.six) {
-        grid[y][x] = NUMBER_TILES.six;
-      }
-      else if (neighbours === -NUMBER_TILES.seven) {
-        grid[y][x] = NUMBER_TILES.seven;
-      }
-      else if (neighbours === -NUMBER_TILES.eight) {
-        grid[y][x] = NUMBER_TILES.eight;
+      if (grid[y][x] !== MINE_TILE) {
+        if (neighbours === NUMBER_TILES.one) {
+          grid[y][x] = NUMBER_TILES.one;
+        }
+        else if (neighbours === NUMBER_TILES.two) {
+          grid[y][x] = NUMBER_TILES.two;
+        }
+        else if (neighbours === NUMBER_TILES.three) {
+          grid[y][x] = NUMBER_TILES.three;
+        }
+        else if (neighbours === NUMBER_TILES.four) {
+          grid[y][x] = NUMBER_TILES.four;
+        }
+        else if (neighbours === NUMBER_TILES.five) {
+          grid[y][x] = NUMBER_TILES.five;
+        }
+        else if (neighbours === NUMBER_TILES.six) {
+          grid[y][x] = NUMBER_TILES.six;
+        }
+        else if (neighbours === NUMBER_TILES.seven) {
+          grid[y][x] = NUMBER_TILES.seven;
+        }
+        else if (neighbours === NUMBER_TILES.eight) {
+          grid[y][x] = NUMBER_TILES.eight;
+        }
       }
 
 
