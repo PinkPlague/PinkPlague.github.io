@@ -188,8 +188,8 @@ function updateGrid() {
       //count it's neighbours
       let neighbours = 0;
 
-      for (let i of searchArea) {
-        for (let j of searchArea) {
+      for (let i = -2; i < 2; i++) {
+        for (let j = -2; j < 2; j++) {
           //don't fall of the edge
           if (y+i >= 0 && y+i < GRID_SIZE && x+j >= 0 && x+j < GRID_SIZE) {
             if (grid[y+i][x+j] === -1) {
@@ -199,10 +199,6 @@ function updateGrid() {
         }
       }
 
-
-
-      //don't count yourself
-      neighbours -= grid[y][x];
 
       if (neighbours === -NUMBER_TILES.one) {
         grid[y][x] = NUMBER_TILES.one;
