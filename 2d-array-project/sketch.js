@@ -9,11 +9,13 @@
 //             [0,1,0,0]];
 
 let grid;
+let coverGrid;
 
 const GRID_SIZE = 10;
 let cellSize;
 
 let shouldToggleNeighbours = false;
+
 
 const BLANK_TILE = 0;
 const MINE_TILE = -1;
@@ -26,6 +28,11 @@ const NUMBER_TILES = {
   six: 6,
   seven: 7,
   eight:8,
+};
+
+let coverTileIds = {
+  on: 1,
+  off: 0,
 };
 
 function preload() {
@@ -50,11 +57,12 @@ function setup() {
   cellSize = height/GRID_SIZE;
   grid = generateRandomGrid(GRID_SIZE, GRID_SIZE);
   updateGrid();
+  coverGrid = coverTiles(GRID_SIZE, GRID_SIZE);
 }
 
 function draw() {
   background(220);
-  displayGrid();
+  displayCoverGrid();
   
 }
 
@@ -79,16 +87,17 @@ function mousePressed() {
     toggleCell(x-1,y);
     toggleCell(x,y+1);
     toggleCell(x,y-1);
+    toggleCell(x+1,y+1);
+    toggleCell(x-1,y-1);
+    toggleCell(x+1,y+1);
+    toggleCell(x-1,y-1);
   }
 }
 
 function toggleCell(x,y) {
   if (x >= 0 && y >= 0 && x < GRID_SIZE && y < GRID_SIZE) {
     if (grid[y][x] === BLANK_TILE) {
-      grid[y][x] = BLANK_TILE;
-    }
-    else if (grid[y][x] === BLANK_TILE) {
-      grid[y][x] = BLANK_TILE;
+      coverGrid[y][x] = coverTileIds.off;
     }
   }
 }
@@ -100,6 +109,20 @@ function keyPressed() {
   // if (key === "n") {
   //   shouldToggleNeighbours = !shouldToggleNeighbours;
   // }
+}
+
+function displayCoverGrid() {
+  for (let y = 0; y < GRID_SIZE; y++) {
+    for (let x = 0; x < GRID_SIZE; x++) {
+      if (coverGrid[y][x] === 1) {
+        fill(220);
+        square(x * cellSize, y * cellSize, cellSize);
+      }
+      else {
+        
+      }
+    }
+  }
 }
 
 function displayGrid() {
@@ -141,6 +164,19 @@ function displayGrid() {
   }
 }
 
+function coverTiles(cols, rows) {
+  let newCoverGrid = [];
+
+  for (let y = 0; y < rows; y ++) {
+    newCoverGrid.push([]);
+    for (let x = 0; x < cols; x++) {
+      newCoverGrid[y].push(coverTileIds.on);
+    }
+  }
+
+  return newCoverGrid;
+}
+
 function generateRandomGrid(cols, rows) {
   let newGrid = [];
 
@@ -148,7 +184,7 @@ function generateRandomGrid(cols, rows) {
     newGrid.push([]);
     for (let x = 0; x < cols; x++) {
       //choose either 0 or 1, each 50% of the time
-      if (random(100) < 5) {
+      if (random(100) < 7) {
         newGrid[y].push(MINE_TILE);
       }
       else {
@@ -232,3 +268,38 @@ function updateGrid() {
   }
 }
 
+function updateBlankOnClick() {
+  //look at every cell
+  for (let y = 0; y < GRID_SIZE; y++) {
+    for (let x = 0; x < GRID_SIZE; x++) {
+      //count it's neighbours
+      let neighbours = 0;
+
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) {
+
+          }
+          //don't fall of the edge
+          else {
+            if (y+i >= 0 && y+i < GRID_SIZE && x+j >= 0 && x+j < GRID_SIZE) {
+              if (grid[y + i][x + j] === MINE_TILE) {
+                neighbours++;
+              }
+            }
+
+          }
+        }
+      }
+
+      if (grid[y][x] !== MINE_TILE) {
+        if (neighbours === BLANK_TILE) {
+          grid[y][x] = BLANK_TILE;
+        }
+      }
+
+
+      
+    }
+  }
+}
