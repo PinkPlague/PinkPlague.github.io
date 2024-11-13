@@ -62,6 +62,7 @@ function setup() {
 
 function draw() {
   background(220);
+  displayGrid();
   displayCoverGrid();
   
 }
