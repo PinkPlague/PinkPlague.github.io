@@ -97,8 +97,11 @@ function mousePressed() {
 
 function toggleCell(x,y) {
   if (x >= 0 && y >= 0 && x < GRID_SIZE && y < GRID_SIZE) {
+    console.log("x = " + x);
+    console.log("y = " + y);
     if (grid[y][x] === BLANK_TILE) {
       coverGrid[y][x] = coverTileIds.off;
+      console.log("cover grid = " + coverGrid[y][x]);
     }
   }
 }
@@ -115,12 +118,11 @@ function keyPressed() {
 function displayCoverGrid() {
   for (let y = 0; y < GRID_SIZE; y++) {
     for (let x = 0; x < GRID_SIZE; x++) {
-      if (coverGrid[y][x] === 1) {
-        fill(220);
-        square(x * cellSize, y * cellSize, cellSize);
+      if (coverGrid[y][x] === 0) {
       }
       else {
-        
+        fill(220);
+        square(x * cellSize, y * cellSize, cellSize);
       }
     }
   }
@@ -171,7 +173,12 @@ function coverTiles(cols, rows) {
   for (let y = 0; y < rows; y ++) {
     newCoverGrid.push([]);
     for (let x = 0; x < cols; x++) {
-      newCoverGrid[y].push(coverTileIds.on);
+      if (Number(coverGrid[y][x]) === 1) {
+        newCoverGrid[y].push(coverTileIds.on);
+      }
+      else {
+        newCoverGrid[y].push(coverTileIds.off);
+      }
     }
   }
 
