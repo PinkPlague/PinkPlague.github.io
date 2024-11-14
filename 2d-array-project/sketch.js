@@ -3,6 +3,14 @@
 // evelynn
 //oct 22, 2024
 
+////// IMPORTANT //////
+//if the game doesn't//
+//work just comment  //
+//out the coverTile  //
+//related stuff,     //
+//it's crazy broken  //
+///////////////////////
+
 // let grid = [[1,0,1,0],
 //             [0,0,1,1],
 //             [1,1,1,0],
@@ -32,7 +40,7 @@ const NUMBER_TILES = {
 
 let coverTileIds = {
   on: 1,
-  off: 0,
+  off: 2,
 };
 
 function preload() {
@@ -173,7 +181,7 @@ function coverTiles(cols, rows) {
   for (let y = 0; y < rows; y ++) {
     newCoverGrid.push([]);
     for (let x = 0; x < cols; x++) {
-      if (Number(coverGrid[y][x]) === 1) {
+      if (Number(coverGrid[y][x]) === coverTileIds.on) {
         newCoverGrid[y].push(coverTileIds.on);
       }
       else {

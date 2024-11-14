@@ -38,24 +38,23 @@ class Walker {
   }
 }
 
-let fox;
-let cat;
-let dog;
+let sharkieArray = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  fox = new Walker(width/2, height/2, 255, 90, 255);
-  cat = new Walker(300, 200, 90, 255, 255);
-  dog = new Walker(300*2, 200*2, 255, 255, 90);
+  let sharkie = new Walker(width/2+1, height/2+1, 255, 90, 255);
+  sharkieArray.push(sharkie);
 }
 
 function draw() {
-  // background(220);
-  fox.move();
-  cat.move();
-  dog.move();
+  for (shark of sharkieArray) {
+    shark.move();
+    shark.display();
+  }
+}
 
-  fox.display();
-  cat.display();
-  dog.display();
+function mousePressed() {
+  let randomColour = color(random(255), random(255), random(255));
+  let someSharkie = new Walker(mouseX, mouseY, randomColour);
+  sharkieArray.push(someSharkie);
 }

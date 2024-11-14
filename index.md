@@ -17,6 +17,7 @@
 - [grid demo](2D-array)
 - [rectangular grid demo](2d-array-demo)
 - [Walker OOP](16-walker-oop)
+- [Walker OOP Array](17-walker-oop-array)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
