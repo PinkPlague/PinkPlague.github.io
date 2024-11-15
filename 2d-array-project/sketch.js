@@ -1,7 +1,7 @@
-/* eslint-disable indent */
-// grid demo
+// grid project
 // evelynn
-//oct 22, 2024
+// oct 22, 2024
+// due nov 15, 2024
 
 ////// IMPORTANT //////
 //if the game doesn't//
@@ -11,20 +11,16 @@
 //it's crazy broken  //
 ///////////////////////
 
-// let grid = [[1,0,1,0],
-//             [0,0,1,1],
-//             [1,1,1,0],
-//             [0,1,0,0]];
 
+// Cell and Grid Stuff //
 let grid;
 let coverGrid;
-
 const GRID_SIZE = 10;
 let cellSize;
+// /////////////////// //
 
-let shouldToggleNeighbours = false;
 
-
+// Tile Stuff //
 const BLANK_TILE = 0;
 const MINE_TILE = -1;
 const NUMBER_TILES = {
@@ -37,11 +33,11 @@ const NUMBER_TILES = {
   seven: 7,
   eight:8,
 };
-
 let coverTileIds = {
   on: 1,
   off: 2,
 };
+// ////////// //
 
 function preload() {
   mineImg = loadImage("assets/textures/mine.png");
@@ -56,15 +52,28 @@ function preload() {
 }
 
 function setup() {
+  // balences the aspect ratio to fit the game
   if (windowWidth < windowHeight) {
     createCanvas(windowWidth, windowWidth);
   }
   else {
     createCanvas(windowHeight, windowHeight);
   }
+
+
   cellSize = height/GRID_SIZE;
   grid = generateRandomGrid(GRID_SIZE, GRID_SIZE);
   updateGrid();
+
+
+
+  ///// IMPORTANT /////
+  //disable all cover//
+  //grid related     //
+  //functions if the //
+  //game breaks.     //
+  /////////////////////
+
   coverGrid = coverTiles(GRID_SIZE, GRID_SIZE);
 }
 
@@ -72,10 +81,10 @@ function draw() {
   background(220);
   displayGrid();
   displayCoverGrid();
-  
 }
 
 function windowResized() {
+  // makes sure the game is always within the visable window
   if (windowWidth < windowHeight) {
     resizeCanvas(windowWidth, windowWidth);
   }
@@ -86,21 +95,21 @@ function windowResized() {
 }
 
 function mousePressed() {
+  // rounding the mouse x and y to fit to the grid
   let x = Math.floor(mouseX / cellSize);
   let y = Math.floor(mouseY / cellSize);
 
+  // toggle cell stuff
   toggleCell(x,y);
 
-  if (shouldToggleNeighbours) {
-    toggleCell(x+1,y);
-    toggleCell(x-1,y);
-    toggleCell(x,y+1);
-    toggleCell(x,y-1);
-    toggleCell(x+1,y+1);
-    toggleCell(x-1,y-1);
-    toggleCell(x+1,y+1);
-    toggleCell(x-1,y-1);
-  }
+  toggleCell(x+1,y);
+  toggleCell(x-1,y);
+  toggleCell(x,y+1);
+  toggleCell(x,y-1);
+  toggleCell(x+1,y+1);
+  toggleCell(x-1,y-1);
+  toggleCell(x+1,y+1);
+  toggleCell(x-1,y-1);
 }
 
 function toggleCell(x,y) {
@@ -118,12 +127,17 @@ function keyPressed() {
   if (key === "r") {
     grid = generateRandomGrid(GRID_SIZE, GRID_SIZE);
   }
-  // if (key === "n") {
-  //   shouldToggleNeighbours = !shouldToggleNeighbours;
-  // }
 }
 
 function displayCoverGrid() {
+  ///// IMPORTANT /////
+  //disable all cover//
+  //grid related     //
+  //functions if the //
+  //game breaks.     //
+  /////////////////////
+
+  // displays the cover grid
   for (let y = 0; y < GRID_SIZE; y++) {
     for (let x = 0; x < GRID_SIZE; x++) {
       if (coverGrid[y][x] === 0) {
@@ -137,6 +151,7 @@ function displayCoverGrid() {
 }
 
 function displayGrid() {
+  // displays all the different tiles
   for (let y = 0; y < GRID_SIZE; y++) {
     for (let x = 0; x < GRID_SIZE; x++) {
       if (grid[y][x] === BLANK_TILE) {
@@ -176,6 +191,14 @@ function displayGrid() {
 }
 
 function coverTiles(cols, rows) {
+  ///// IMPORTANT /////
+  //disable all cover//
+  //grid related     //
+  //functions if the //
+  //game breaks.     //
+  /////////////////////
+
+  // Generates the Cover Tiles
   let newCoverGrid = [];
 
   for (let y = 0; y < rows; y ++) {
@@ -194,6 +217,7 @@ function coverTiles(cols, rows) {
 }
 
 function generateRandomGrid(cols, rows) {
+  // generates a random grid upon activation
   let newGrid = [];
 
   for (let y = 0; y < rows; y ++) {
@@ -213,6 +237,7 @@ function generateRandomGrid(cols, rows) {
 }
 
 function generateEmptyGrid(cols, rows) {
+  //generates an empty grid upon activation
   let newGrid = [];
 
   for (let y = 0; y < rows; y ++) {
@@ -226,7 +251,7 @@ function generateEmptyGrid(cols, rows) {
 }
 
 function updateGrid() {
-  //make a new array to hold the next turn
+  // Updates the grid every time theres a change
 
   //look at every cell
   for (let y = 0; y < GRID_SIZE; y++) {
@@ -285,6 +310,15 @@ function updateGrid() {
 }
 
 function updateBlankOnClick() {
+  ///// IMPORTANT /////
+  //disable all cover//
+  //grid related     //
+  //functions if the //
+  //game breaks.     //
+  /////////////////////
+
+  // Intended to disable the clicked cover tile, but may be broken
+
   //look at every cell
   for (let y = 0; y < GRID_SIZE; y++) {
     for (let x = 0; x < GRID_SIZE; x++) {

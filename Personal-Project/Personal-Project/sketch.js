@@ -106,13 +106,13 @@ function loadStartScreen() {
   player.x = 50;
 
   //Create two platforms
-  new platforms.Sprite(400, windowHeight - 100, 700, 700);
-  new platforms.Sprite(800, windowHeight - 100, 700, 700);
-  new platforms.Sprite(1200, windowHeight - 100, 700, 700);
-  new platforms.Sprite(1400, windowHeight - 100, 700, 700);
-  new platforms.Sprite(600, 0, 700, 700);
-  new platforms.Sprite(1000, 0, 700, 700);
-  new platforms.Sprite(1300, 0, 700, 700);
+  new platforms.Sprite(400, windowHeight - 100, 600, 600);
+  new platforms.Sprite(800, windowHeight - 100, 600, 600);
+  new platforms.Sprite(1200, windowHeight - 100, 600, 600);
+  new platforms.Sprite(1400, windowHeight - 150, 500, 500);
+  new platforms.Sprite(600, 0, 600, 600);
+  new platforms.Sprite(1000, 0, 600, 600);
+  new platforms.Sprite(1300, -50, 500, 500);
 
   //Create eight coins
   // new coins.Sprite(220, 170, 15);
