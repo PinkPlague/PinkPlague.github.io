@@ -18,6 +18,7 @@
 - [rectangular grid demo](2d-array-demo)
 - [Walker OOP](16-walker-oop)
 - [Walker OOP Array](17-walker-oop-array)
+- [fireworks oop](18-fireworks-oop)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
