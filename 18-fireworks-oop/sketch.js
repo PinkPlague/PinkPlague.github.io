@@ -14,13 +14,10 @@ class Particle {
     this.b = 255;
     this.a = 255;
   }
-
   display() {
     fill(this.r, this.g, this.b, this.a);
     circle(this.x, this.y, this.size);
-
   }
-
   update() {
     //move
     this.x += this.dx;
@@ -28,7 +25,6 @@ class Particle {
     //fade
     this.a-=5;
   }
-
   isDead() {
     return this.a <= 0;
   }
@@ -39,7 +35,6 @@ let boom = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
 }
-
 function draw() {
   noStroke();
   background(0);
@@ -57,7 +52,6 @@ function draw() {
 
   }
 }
-
 function mousePressed() {
   for (let i = 0; i < NUM_OF_PARTICLES_PER_CLICK; i++) {
     let someParticle = new Particle(mouseX, mouseY);
