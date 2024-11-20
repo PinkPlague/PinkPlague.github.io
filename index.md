@@ -19,6 +19,7 @@
 - [Walker OOP](16-walker-oop)
 - [Walker OOP Array](17-walker-oop-array)
 - [fireworks oop](18-fireworks-oop)
+- [connected nodes oop](19-nodes)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
