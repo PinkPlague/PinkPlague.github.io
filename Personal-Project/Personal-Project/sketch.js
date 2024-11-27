@@ -114,36 +114,9 @@ function loadStartScreen() {
   new platforms.Sprite(1000, 0, 600, 600);
   new platforms.Sprite(1300, -50, 500, 500);
 
-  //Create eight coins
-  // new coins.Sprite(220, 170, 15);
-  // new coins.Sprite(260, 170, 15);
-  // new coins.Sprite(300, 170, 15);
-  // new coins.Sprite(600, 350, 15);
-  // new coins.Sprite(640, 350, 15);
-  // new coins.Sprite(680, 350, 15);
-  // new coins.Sprite(810, 350, 15);
-  // new coins.Sprite(850, 350, 15);
 }
 
 function reset() {
   score = 0;
   loadStartScreen();
-}
-
-//This function uses parameters 
-function collect(player, coin) {
-  coin.remove();
-  score = score + 1;
-}
-
-function youWin() {
-  //Draw sprites off screen
-  player.x = 3000;
-
-  //Draw end of game text
-  textSize(20);
-  fill(0);
-  text("You win!", width/2 - 50, height/2 - 30); 
-  textSize(12);
-  text("Press Run to play again.", width/2 - 75, height/2);
 }
