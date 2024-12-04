@@ -22,6 +22,7 @@
 - [connected nodes oop](19-nodes)
 - [collide2d](20-libraries-demo)
 - [Local storage demo](21-local-storage)
+- [inheritance demo](22-inheritance)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
