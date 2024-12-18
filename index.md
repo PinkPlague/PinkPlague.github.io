@@ -23,6 +23,7 @@
 - [collide2d](20-libraries-demo)
 - [Local storage demo](21-local-storage)
 - [inheritance demo](22-inheritance)
+- [](23-maps)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
