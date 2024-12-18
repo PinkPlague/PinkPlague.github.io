@@ -23,7 +23,8 @@
 - [collide2d](20-libraries-demo)
 - [Local storage demo](21-local-storage)
 - [inheritance demo](22-inheritance)
-- [](23-maps)
+- [Fractal circles](23-fractal-circle)
+- [Serpinski triangle](24-fractal-triangle)
 
 ## Projects
 - [Interactive Scene (Pong Recreation)](interactive-scene)
